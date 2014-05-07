@@ -5,6 +5,8 @@ group :development, :test do
 #used in both test and development
   gem "rspec-rails", "~> 2.14.0" # adds rspec and other rspec related features
   gem "factory_girl_rails", "~> 4.2.1" #default fixtures for feeding test data into the test suite
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 group :test do
