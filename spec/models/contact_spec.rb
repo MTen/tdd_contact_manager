@@ -3,12 +3,7 @@ require 'spec_helper'
 describe Contact do
 
   it 'is valid with a first name, last name, and email' do
-    contact = Contact.new(
-      first_name: 'Aaron',
-      last_name: 'Summer',
-      email: 'text@testies.com'
-    )
-    expect(contact).to be_valid
+    expect(FactoryGirl.build(:contact)).to be_valid
   end
 
   it 'is invalid without a first name' do
@@ -40,17 +35,21 @@ describe Contact do
 
   describe "filter last name by letter" do
     before :each do
-      smith = Contact.create(first_name: 'John', last_name: 'Smith', email: 'jsmith@example.com')
-      jones = Contact.create(first_name: 'Tim', last_name: 'Jones', email: 'tjones@example.com')
-      johnson = Contact.create(first_name: 'John', last_name: 'Johnson', email: 'jjohnson@example.com')
+      @smith = Contact.create(first_name: 'John', last_name: 'Smith', email: 'jsmith@example.com')
+      @jones = Contact.create(first_name: 'Tim', last_name: 'Jones', email: 'tjones@example.com')
+      @johnson = Contact.create(first_name: 'John', last_name: 'Johnson', email: 'jjohnson@example.com')
     end
 
     context 'matching letters' do
-      expect(Contact.by_letter("J")).to eq [johnson, jones]
+      it "returns a sorted array of results that match" do
+        expect(Contact.by_letter("J")).to eq [@johnson, @jones]
+      end
     end
 
     context 'non-matching letters' do
-      expect(Contact.by_letter("J")).to_not include [smith]
+      it "returns a sorted array of results that match" do
+        expect(Contact.by_letter("J")).to_not include @smith
+      end
     end
   end
 
