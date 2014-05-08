@@ -7,30 +7,29 @@ describe Contact do
   end
 
   it 'is invalid without a first name' do
-    expect(Contact.new(first_name: nil)).to have(1).errors_on(:first_name)
+    contact = FactoryGirl.build(:contact, first_name: nil)
+    expect(contact).to have(1).errors_on(:first_name)
   end
 
   it 'is invalid without a last name' do
-    expect(Contact.new(last_name: nil)).to have(1).errors_on(:last_name)
+    contact = FactoryGirl.build(:contact, last_name: nil)
+    expect(contact).to have(1).errors_on(:last_name)
   end
 
   it 'is invalid without an email address' do
-    expect(Contact.new(email: nil)).to have(1).errors_on(:email)
+    contact = FactoryGirl.build(:contact, email: nil)
+    expect(contact).to have(1).errors_on(:email)
   end
 
   it 'is invalid with a duplicate email address' do
-    Contact.create(
-      first_name: 'Joe', last_name: 'Tester', email: 'tester@example.com'
-    )
-    contact = Contact.new(
-      first_name: 'Jane', last_name: 'Tester', email: 'tester@example.com'
-    )
+    FactoryGirl.create(:contact, email: "MikeTener@example.com")
+    contact = FactoryGirl.build(:contact, email: "MikeTener@example.com")
     expect(contact).to have(1).errors_on(:email)
   end
 
   it 'returns a contact\'s full name as a string' do
-    contact = Contact.new(first_name: 'John', last_name: 'Tester', email: 'john@test.com')
-    expect(contact.name).to eq 'John Tester'
+    contact = FactoryGirl.build(:contact)
+    expect(contact.name).to eq 'Mike Tener'
   end
 
   describe "filter last name by letter" do
