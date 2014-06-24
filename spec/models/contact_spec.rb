@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Contact do
 
+  it 'has a valid facotry' do
+    expect(build(:contact)).to be_valid
+  end
+
   it 'is valid with a first name, last name, and email' do
     expect(build(:contact)).to be_valid
   end
